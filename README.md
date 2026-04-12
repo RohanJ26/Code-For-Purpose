@@ -365,7 +365,9 @@ Full schemas: **`/docs`** (Swagger).
 
 ## License & team
 
-- **License:** Include a `LICENSE` file consistent with the hackathon rules (many events use **Apache 2.0** with **DCO**). If this repo has no `LICENSE` yet, add one before submission.  
+- **License:** Include a `LICENSE` file consistent with the hackathon rules (many events use **Apache 2.0** with **DCO**). If this repo has no `LICENSE` yet, add one before submission.
+- **Issues:** Use GitHub **Issues** for bug reports and questions about this repo.
+
 ## 🤝 Connect With Our Team
 
 Connect with us on LinkedIn:
@@ -375,7 +377,6 @@ Connect with us on LinkedIn:
 
 > **Built with ❤️ for Code for Purpose 2026**
 
-- **Issues:** Use GitHub **Issues** for bug reports and questions about this repo.
 
 ---
 
