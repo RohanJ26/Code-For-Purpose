@@ -373,7 +373,6 @@ Connect with us on LinkedIn:
 
 > **Built with ❤️ for Code for Purpose 2026**
 
-
 ---
 
 <div align="center">
