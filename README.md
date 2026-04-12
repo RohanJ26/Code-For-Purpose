@@ -56,15 +56,15 @@
 
 ## Screenshots & visuals
 
-Real product and architecture images live in [`docs/images/`](./docs/images/). To refresh them after UI changes, overwrite the same filenames (see [`docs/images/README.md`](./docs/images/README.md)).
+Product screenshots and the architecture diagram are stored under **`docs/images/`** as PNG files. Paths in this section are **relative to the repository root** (e.g. `docs/images/flow-architecture.png`) so they render on **GitHub** and in the **VS Code / Cursor Markdown preview**.
+
+**If images look broken:** confirm the eight `.png` files exist locally, then **commit and push** them — the README only links to files in the repo; they are not hosted elsewhere.
 
 ### Flow & architecture (combined figure)
 
 End-to-end **user journey** (browser → Next.js → FastAPI → Gemini & data) and **system structure** in one diagram.
 
-<p align="center">
-  <img src="./docs/images/flow-architecture.png" alt="DataMind — combined user flow and technical architecture diagram" width="95%" />
-</p>
+![DataMind — combined user flow and technical architecture](docs/images/flow-architecture.png)
 
 ### Architecture diagram (Mermaid — renders on GitHub)
 
@@ -102,40 +102,33 @@ flowchart TB
 
 ### Product walkthrough *(7 screens)*
 
-<p align="center">
-  <strong>1 · Dashboard — KPIs &amp; quick actions</strong><br/>
-  <img src="./docs/images/screen-03-dashboard-kpis.png" alt="DataMind dashboard showing KPI cards and Open analytics button" width="92%" />
-</p>
+#### 1 · Dashboard — KPIs & quick actions
 
-<p align="center">
-  <strong>2 · Dashboard — AI analysis chat</strong><br/>
-  <img src="./docs/images/screen-04-dashboard-chat.png" alt="DataMind dashboard with Analysis Chat and executive insights from Gemini" width="92%" />
-</p>
+![DataMind dashboard — KPI cards and Open analytics](docs/images/screen-03-dashboard-kpis.png)
 
-<p align="center">
-  <strong>3 · Analytics — key metrics &amp; line charts</strong><br/>
-  <img src="./docs/images/screen-07-analytics-charts.png" alt="Analytics page with total records, completeness, and line charts such as Age by row index" width="92%" />
-</p>
+#### 2 · Dashboard — AI analysis chat
 
-<p align="center">
-  <strong>4 · Analytics — scatter plot &amp; AI-powered insights</strong><br/>
-  <img src="./docs/images/screen-02-analytics-scatter-insights.png" alt="Analytics with Age vs BMI scatter chart and AI insight cards" width="92%" />
-</p>
+![DataMind dashboard — Analysis Chat with Gemini insights](docs/images/screen-04-dashboard-chat.png)
 
-<p align="center">
-  <strong>5 · Trends — dataset-driven signals</strong><br/>
-  <img src="./docs/images/screen-05-trends.png" alt="Trends page with current trend cards and AI predictions from the active dataset" width="92%" />
-</p>
+#### 3 · Analytics — key metrics & line charts
 
-<p align="center">
-  <strong>6 · Compare datasets — schema &amp; scale</strong><br/>
-  <img src="./docs/images/screen-01-compare-datasets.png" alt="Compare datasets modal showing Dataset A vs B and schema alignment" width="92%" />
-</p>
+![DataMind Analytics — metrics and line charts](docs/images/screen-07-analytics-charts.png)
 
-<p align="center">
-  <strong>7 · Formal HTML report — executive summary &amp; data dictionary</strong><br/>
-  <img src="./docs/images/screen-06-formal-html-report.png" alt="Downloaded or previewed DataMind HTML report with executive summary and column dictionary" width="92%" />
-</p>
+#### 4 · Analytics — scatter plot & AI-powered insights
+
+![DataMind Analytics — scatter chart and AI insight cards](docs/images/screen-02-analytics-scatter-insights.png)
+
+#### 5 · Trends — dataset-driven signals
+
+![DataMind Trends — trend cards and AI predictions](docs/images/screen-05-trends.png)
+
+#### 6 · Compare datasets — schema & scale
+
+![DataMind — Compare datasets modal and schema alignment](docs/images/screen-01-compare-datasets.png)
+
+#### 7 · Formal HTML report — executive summary & data dictionary
+
+![DataMind — formal HTML report preview](docs/images/screen-06-formal-html-report.png)
 
 ---
 

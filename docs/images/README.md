@@ -1,6 +1,8 @@
 # Images for README
 
-PNG files in this folder are **linked from the root [`README.md`](../../README.md)**. Replace them when the UI changes so judges always see current screens.
+PNG files in this folder are **linked from the root [`README.md`](../../README.md)** using paths like `docs/images/yourfile.png` (relative to the repo root). Replace them when the UI changes so judges always see current screens.
+
+**Images not showing on GitHub?** The PNGs must be **committed and pushed** with the rest of the project. If this folder only contains `.svg` placeholders, re-add the screenshots from your machine (see team notes) or run the copy step from your saved assets.
 
 ## Current assets
 
