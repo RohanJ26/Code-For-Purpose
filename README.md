@@ -363,46 +363,18 @@ Full schemas: **`/docs`** (Swagger).
 
 ---
 
-## Limitations & honesty
-
-- **In-memory data:** Restarting the Python process **clears** uploaded datasets. Users must **re-upload** after a server restart unless you add persistence.  
-- **Gemini dependency:** Without a valid key, AI features fall back to **demo or error messages** depending on the code path.  
-- **Model availability:** Google may change model names; the backend includes **fallback** logic — check logs if you see HTTP 404/429.  
-- **Not a full BI suite:** No multi-user auth, row-level security, or warehouse integration in this repo.  
-- **Tests:** Automated tests are **not** required by this README; add a `tests/` folder if you want assessment on coverage (see hackathon rules).
-
-This section is intentionally explicit so **judges can trust** what they are evaluating.
-
----
-
-## Future improvements
-
-Ideas for a **longer runway** (not promised as done today):
-
-- Persistent storage (e.g. **S3** + **PostgreSQL**) for files and metadata  
-- User accounts and **OAuth**  
-- Streaming chat responses (**SSE** / WebSocket)  
-- Stronger automated **tests** and CI  
-- Scheduled reports and email delivery  
-
----
-
-## Hackathon / submission notes
-
-This documentation is structured to align with common **student hackathon README expectations** (clear overview, real features, install steps, tech stack, usage, architecture, honesty):
-
-- **README is accurate** — features listed under [Features (implemented)](#features-implemented) correspond to working paths in the repository.  
-- **Secrets** — Use `.env.example` only; do not commit real API keys or passwords.  
-- **Original work** — Use third-party libraries under their licences; your **integration, prompts, and UI** should be your team’s own submission.  
-- **Repository rules** — Follow the organiser’s policies (e.g. **private repo** during the event, **DCO / sign-off**, **single email**, **Apache 2.0** compatibility if required).  
-- **Screenshots** — Add final PNGs per [`docs/images/README.md`](./docs/images/README.md) before final submission.
-
----
-
 ## License & team
 
 - **License:** Include a `LICENSE` file consistent with the hackathon rules (many events use **Apache 2.0** with **DCO**). If this repo has no `LICENSE` yet, add one before submission.  
-- **Team:** *[Add your names, handles, and affiliation here.]*  
+## 🤝 Connect With Our Team
+
+Connect with us on LinkedIn:
+
+- [Rohan Jhanwar](https://www.linkedin.com/in/rohan-jhanwar-15a866315/)
+- [Ayana Kumar](https://www.linkedin.com/in/ayana-kumar)
+
+> **Built with ❤️ for Code for Purpose 2026**
+
 - **Issues:** Use GitHub **Issues** for bug reports and questions about this repo.
 
 ---
