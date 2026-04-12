@@ -363,10 +363,6 @@ Full schemas: **`/docs`** (Swagger).
 
 ---
 
-## License & team
-
-- **License:** Include a `LICENSE` file consistent with the hackathon rules (many events use **Apache 2.0** with **DCO**). If this repo has no `LICENSE` yet, add one before submission.
-- **Issues:** Use GitHub **Issues** for bug reports and questions about this repo.
 
 ## 🤝 Connect With Our Team
 
