@@ -217,7 +217,7 @@ export function CompareDatasetsDialog(props: {
     });
     const a = String(d1?.filename ?? 'a').replace(/[^\w.-]+/g, '_').slice(0, 40);
     const b = String(d2?.filename ?? 'b').replace(/[^\w.-]+/g, '_').slice(0, 40);
-    downloadHtmlFile(html, `comparison-report-${a}-vs-${b}.html`);
+    downloadHtmlFile(`comparison-report-${a}-vs-${b}.html`, html);
   };
 
   return (

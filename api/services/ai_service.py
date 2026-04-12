@@ -9,6 +9,23 @@ import requests
 from typing import Optional, List, Dict, Any
 import pandas as pd
 
+# Gemini 1.x IDs are removed from the consumer API (404 on generateContent). Map to current models.
+_GEMINI_MODEL_ALIASES = {
+    "gemini-1.5-flash-8b": "gemini-2.5-flash",
+    "gemini-1.5-flash": "gemini-2.5-flash",
+    "gemini-1.5-flash-latest": "gemini-2.5-flash",
+    "gemini-1.5-flash-001": "gemini-2.5-flash",
+    "gemini-1.5-flash-002": "gemini-2.5-flash",
+    "gemini-1.5-pro": "gemini-2.5-flash",
+    "gemini-1.5-pro-latest": "gemini-2.5-flash",
+    "gemini-1.0-pro": "gemini-2.5-flash",
+}
+
+
+def _resolve_gemini_model(name: str) -> str:
+    n = (name or "").strip()
+    return _GEMINI_MODEL_ALIASES.get(n, n)
+
 
 class AIService:
     """Service for AI-powered analysis using Google Gemini"""
@@ -19,7 +36,7 @@ class AIService:
         self.demo_mode = not self.api_key  # Enable demo mode if no key
         
         # Prefer a current default; override with GEMINI_MODEL or comma-separated GEMINI_MODEL_FALLBACKS
-        self.model_name = os.getenv("GEMINI_MODEL", "gemini-2.5-flash").strip()
+        self.model_name = _resolve_gemini_model(os.getenv("GEMINI_MODEL", "gemini-2.5-flash"))
         
         # Cache and rate limiting
         self.response_cache = {}
@@ -40,16 +57,19 @@ class AIService:
 
     def _model_fallback_chain(self) -> List[str]:
         extra = os.getenv("GEMINI_MODEL_FALLBACKS", "")
-        extras = [m.strip() for m in extra.split(",") if m.strip()]
+        extras = [_resolve_gemini_model(m) for m in extra.split(",") if m.strip()]
+        # Only 2.x / 3.x — 1.5* returns 404 on current Gemini API for many keys
         defaults = [
             self.model_name,
             "gemini-2.5-flash",
             "gemini-2.0-flash",
-            "gemini-1.5-flash-8b",
+            "gemini-2.0-flash-001",
+            "gemini-3-flash-preview",
         ]
         ordered: List[str] = []
         seen: set[str] = set()
         for m in defaults + extras:
+            m = _resolve_gemini_model(m)
             if m not in seen:
                 seen.add(m)
                 ordered.append(m)
@@ -502,6 +522,47 @@ Key insights, trends, and recommendations (keep response under 200 words):"""
                 "recommendations": []
             }
     
+    def _compare_datasets_fallback(
+        self,
+        dataset1: pd.DataFrame,
+        dataset2: pd.DataFrame,
+        stats1: Dict[str, Any],
+        stats2: Dict[str, Any],
+        err: BaseException,
+    ) -> Dict[str, Any]:
+        """Structured comparison text when Gemini is unavailable; UI still shows snapshot/charts."""
+        r1, c1 = dataset1.shape
+        r2, c2 = dataset2.shape
+        n1 = len(dataset1.select_dtypes(include=["number"]).columns)
+        n2 = len(dataset2.select_dtypes(include=["number"]).columns)
+        shared_numeric = sorted(set((stats1 or {}).keys()) & set((stats2 or {}).keys()))
+        err_hint = str(err).replace("\n", " ").strip()[:200]
+        differences = [
+            f"Dataset 1 has {r1:,} rows and {c1} columns; dataset 2 has {r2:,} rows and {c2} columns.",
+            f"Numeric columns: {n1} vs {n2}.",
+        ]
+        if shared_numeric:
+            differences.append(
+                f"Overlapping numeric fields in describe(): {', '.join(shared_numeric[:12])}"
+                + ("…" if len(shared_numeric) > 12 else "")
+            )
+        similarities = []
+        if shared_numeric:
+            similarities.append(
+                f"Both datasets expose comparable summary stats for: {', '.join(shared_numeric[:8])}."
+            )
+        else:
+            similarities.append("Compare column names and row counts using the schema section above.")
+        return {
+            "differences": differences,
+            "similarities": similarities,
+            "performance": "AI ranking unavailable; use the numeric comparison table and charts.",
+            "insights": (
+                "Gemini could not complete this comparison. Check GEMINI_MODEL (e.g. gemini-2.0-flash) and quota. "
+                f"Detail: {err_hint}"
+            ),
+        }
+
     async def compare_datasets(
         self,
         dataset1: pd.DataFrame,
@@ -530,7 +591,7 @@ Key insights, trends, and recommendations (keep response under 200 words):"""
 
             stats1 = dataset1.describe().to_dict()
             stats2 = dataset2.describe().to_dict()
-            
+
             prompt = f"""
             Compare these two datasets:
             
@@ -548,32 +609,37 @@ Key insights, trends, and recommendations (keep response under 200 words):"""
             
             Format as JSON with keys: differences, similarities, performance, insights
             """
-            
-            text = await asyncio.to_thread(
-                self._gemini_generate,
-                system_instruction="Reply with JSON only. Keys: differences, similarities, performance, insights.",
-                contents=[{"role": "user", "parts": [{"text": prompt}]}],
-                max_output_tokens=2048,
-                temperature=0.35,
-            )
-            raw = text.strip()
-            if raw.startswith("```"):
-                lines = raw.split("\n")
-                if lines and lines[0].startswith("```"):
-                    lines = lines[1:]
-                if lines and lines[-1].strip() == "```":
-                    lines = lines[:-1]
-                raw = "\n".join(lines).strip()
+
             try:
-                comparison = json.loads(raw)
-            except json.JSONDecodeError:
-                comparison = {
-                    "comparison": text,
-                    "differences": [],
-                    "similarities": [],
-                }
-            
-            return comparison
+                text = await asyncio.to_thread(
+                    self._gemini_generate,
+                    system_instruction="Reply with JSON only. Keys: differences, similarities, performance, insights.",
+                    contents=[{"role": "user", "parts": [{"text": prompt}]}],
+                    max_output_tokens=2048,
+                    temperature=0.35,
+                )
+                raw = text.strip()
+                if raw.startswith("```"):
+                    lines = raw.split("\n")
+                    if lines and lines[0].startswith("```"):
+                        lines = lines[1:]
+                    if lines and lines[-1].strip() == "```":
+                        lines = lines[:-1]
+                    raw = "\n".join(lines).strip()
+                try:
+                    comparison = json.loads(raw)
+                except json.JSONDecodeError:
+                    comparison = {
+                        "comparison": text,
+                        "differences": [],
+                        "similarities": [],
+                    }
+
+                return comparison
+            except Exception as gen_err:
+                print(f"[v0] Gemini compare failed, using structural fallback: {gen_err}")
+                return self._compare_datasets_fallback(dataset1, dataset2, stats1, stats2, gen_err)
+
         except Exception as e:
             print(f"[v0] Dataset comparison error: {str(e)}")
             raise

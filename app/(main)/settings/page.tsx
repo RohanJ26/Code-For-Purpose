@@ -37,7 +37,7 @@ export default function SettingsPage() {
             <div className="space-y-4 ml-8">
               <div>
                 <label className="block text-sm font-medium text-foreground mb-2">Email Address</label>
-                <Input type="email" defaultValue="user@example.com" className="rounded-lg" disabled />
+                <Input type="email" defaultValue="john.analyst@gmail.com" className="rounded-lg" disabled />
               </div>
 
               <div>
