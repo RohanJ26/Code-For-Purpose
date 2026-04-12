@@ -8,7 +8,7 @@ PNG files in this folder are **linked from the root [`README.md`](../../README.m
 
 | File | Content |
 |------|---------|
-| `flow-architecture.jpeg` | **Combined** user flow + technical architecture (single diagram). |
+| `flow-architecture.png` (optional duplicate) | Same diagram as **`architecture-diagram.png` in the repo root** — the root copy is what the README uses for reliable inline display. |
 | `screen-01-compare-datasets.png` | Compare datasets modal (Dataset A vs B, schema alignment). |
 | `screen-02-analytics-scatter-insights.png` | Analytics — scatter chart (e.g. Age vs BMI) + AI insight cards. |
 | `screen-03-dashboard-kpis.png` | Dashboard — KPI cards and suggested questions. |

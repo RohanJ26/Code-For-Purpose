@@ -56,15 +56,21 @@
 
 ## Screenshots & visuals
 
-Product screenshots and the architecture diagram are stored under **`docs/images/`** as PNG files. Paths in this section are **relative to the repository root** (e.g. `docs/images/flow-architecture.png`) so they render on **GitHub** and in the **VS Code / Cursor Markdown preview**.
+Screenshots live in **`docs/images/`**. The **architecture diagram** is also copied to the **repository root** as `architecture-diagram.png` (next to `README.md`) so it **embeds inline** in GitHub and in editors — nested paths sometimes open a blob URL that 404s when clicked instead of rendering as a picture.
 
-**If images look broken:** confirm the eight `.png` files exist locally, then **commit and push** them — the README only links to files in the repo; they are not hosted elsewhere.
+**Commit and push** all PNGs (including `architecture-diagram.png` at the root) or images will not show on GitHub.
 
 ### Flow & architecture (combined figure)
 
 End-to-end **user journey** (browser → Next.js → FastAPI → Gemini & data) and **system structure** in one diagram.
 
-![DataMind — combined user flow and technical architecture](docs/images/flow-architecture.png)
+<p align="center">
+  <img
+    src="architecture-diagram.png"
+    alt="DataMind: combined user flow and system architecture (browser, Next.js, FastAPI, Gemini)"
+    width="920"
+  />
+</p>
 
 ### Architecture diagram (Mermaid — renders on GitHub)
 
