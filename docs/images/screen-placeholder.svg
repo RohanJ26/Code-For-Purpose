@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" role="img" aria-label="Screenshot placeholder">
+  <defs>
+    <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1e293b"/>
+      <stop offset="100%" style="stop-color:#0f172a"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="675" fill="url(#g)"/>
+  <rect x="48" y="48" width="1104" height="579" rx="12" fill="#334155" opacity="0.35" stroke="#475569" stroke-width="2"/>
+  <text x="600" y="320" fill="#cbd5e1" font-family="system-ui,sans-serif" font-size="20" text-anchor="middle">Screenshot placeholder</text>
+  <text x="600" y="360" fill="#64748b" font-family="system-ui,sans-serif" font-size="15" text-anchor="middle">Export your UI as PNG (see docs/images/README.md)</text>
+</svg>

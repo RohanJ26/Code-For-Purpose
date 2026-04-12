@@ -1,351 +1,448 @@
-# DataMind - AI Business Analyst Platform
+<div align="center">
 
-A sophisticated, production-ready platform that combines the power of AI (Google Gemini) with data analysis and business intelligence. Designed to win hackathons with excellent architecture and cutting-edge features.
+# DataMind
 
-## Features
+### Your AI teammate for spreadsheets
 
-- **AI-Powered Chat**: Natural language queries on your data using Google Gemini
-- **Data Upload**: Support for CSV and Excel files
-- **Dataset Analysis**: Automatic statistical analysis and insights
-- **Why Engine**: Root cause analysis - understand why metrics have specific values
-- **Data Comparisons**: Compare multiple datasets with AI insights
-- **KPI Dashboard**: Real-time key performance indicators with trends
-- **Visualizations**: Auto-generated charts and graphs (Matplotlib)
-- **Voice I/O**: Speak your questions, get spoken responses
-- **Analytics Dashboard**: Comprehensive business analytics and reporting
-- **Beautiful UI**: Modern, dark-first design with professional aesthetics
+**Upload a file · Ask in plain English · Get charts, KPIs, and exportable reports**
 
-## Tech Stack
+[![FastAPI](https://img.shields.io/badge/API-FastAPI-009688?style=flat&logo=fastapi)](https://fastapi.tiangolo.com/)
+[![Next.js](https://img.shields.io/badge/Frontend-Next.js-000000?style=flat&logo=next.js)](https://nextjs.org/)
+[![Gemini](https://img.shields.io/badge/AI-Google%20Gemini-4285F4?style=flat)](https://ai.google.dev/)
 
-### Frontend
-- **Next.js 16** with React 19
-- **TypeScript** for type safety
-- **Tailwind CSS** for styling
-- **Shadcn/ui** for components
-- **Web Speech API** for voice features
-
-### Backend
-- **Python 3.12** 
-- **FastAPI** for high-performance API
-- **Google Gemini API** for AI analysis
-- **Pandas** for data processing
-- **Matplotlib/Seaborn** for visualizations
-- **SQLAlchemy** ready for database integration
-
-### Infrastructure
-- **Vercel** for serverless deployment
-- **Environment-based configuration**
-- **Docker support** for local development
-
-## Quick Start
-
-### Prerequisites
-- Node.js 18+
-- Python 3.10+
-- Google Gemini API Key ([Get one free](https://ai.google.dev))
-
-### Installation
-
-1. **Clone repository**
-```bash
-git clone https://github.com/YOUR_USERNAME/datamind.git
-cd datamind
-```
-
-2. **Install dependencies**
-```bash
-# Frontend
-npm install
-# or
-pnpm install
-
-# Backend
-cd api
-python -m venv venv
-source venv/bin/activate  # Windows: venv\Scripts\activate
-pip install -r requirements.txt
-```
-
-3. **Configure environment**
-```bash
-# Copy and fill env files
-cp .env.example .env.local
-cp api/.env.example api/.env
-
-# Add your GEMINI_API_KEY
-```
-
-4. **Run the application**
-
-**Option A: Docker Compose (Recommended)**
-```bash
-docker-compose up
-```
-- Frontend: http://localhost:3000
-- API: http://localhost:8000
-- API Docs: http://localhost:8000/docs
-
-**Option B: Manual Start**
-
-Terminal 1 - Frontend:
-```bash
-npm run dev
-# Open http://localhost:3000
-```
-
-Terminal 2 - Backend:
-```bash
-cd api
-source venv/bin/activate
-python -m uvicorn main:app --reload --port 8000
-```
-
-## Architecture
-
-### Clean Layered Architecture
-
-```
-Frontend (Next.js)
-    ↓
-API Routes (next/app/api)
-    ↓
-FastAPI Backend
-    ├── Routes (endpoints)
-    ├── Services (business logic)
-    │   ├── AIService (Gemini)
-    │   ├── DataService (processing)
-    │   └── VisualizationService (charts)
-    ├── Models (schemas)
-    └── Utils (helpers)
-```
-
-### Key Components
-
-**Frontend**
-- `app/page.tsx` - Main dashboard
-- `app/analytics/page.tsx` - Analytics dashboard
-- `components/chat-interface.tsx` - Chat UI
-- `components/file-upload.tsx` - File upload
-- `components/kpi-dashboard.tsx` - KPI cards
-- `hooks/use-voice-recorder.ts` - Voice input
-
-**Backend**
-- `api/main.py` - FastAPI app with all endpoints
-- `api/services/ai_service.py` - Gemini integration
-- `api/services/ai_service_v2.py` - Advanced analysis features
-- `api/services/data_service.py` - Data handling
-- `api/services/visualization_service.py` - Chart generation
-- `api/models/schemas.py` - Request/response models
-
-## API Endpoints
-
-### Core Endpoints
-
-```bash
-# Health check
-GET /health
-
-# Chat with AI
-POST /api/chat
-{
-  "message": "What are the trends in sales?",
-  "conversation_history": [],
-  "context": {}
-}
-
-# Upload dataset
-POST /api/upload-dataset
-Content-Type: multipart/form-data
-file: <csv or xlsx>
-
-# Analyze dataset
-POST /api/analyze-dataset
-{
-  "dataset_id": "abc123",
-  "analysis_type": "comprehensive",
-  "focus_areas": ["column1"]
-}
-
-# Get dataset info
-GET /api/dataset-info/{dataset_id}
-
-# Compare datasets
-POST /api/compare-datasets
-{
-  "dataset_id_1": "abc",
-  "dataset_id_2": "xyz",
-  "metrics": []
-}
-
-# KPI analysis
-POST /api/kpi-analysis
-{
-  "dataset_id": "abc123",
-  "kpi_definitions": []
-}
-```
-
-## Advanced Features
-
-### Why Engine
-Understand the root causes of data trends:
-```bash
-POST /api/why-analysis
-{
-  "metric": "revenue",
-  "value": 45000,
-  "context": { ... }
-}
-```
-
-### Suggested Questions
-Get auto-generated insightful questions about your data:
-```bash
-POST /api/suggest-questions
-{
-  "dataset_id": "abc123",
-  "num_questions": 5
-}
-```
-
-### Data Visualization
-Auto-generated charts from your data:
-- Distribution charts
-- Time series
-- Correlation heatmaps
-- Category breakdowns
-- Scatter plots
-- Dashboards
-
-### Voice Features
-- **Speech-to-Text**: Ask questions using your voice
-- **Text-to-Speech**: Hear analysis results read aloud
-- **Browser-native**: Uses Web Speech API
-
-## Configuration
-
-### Environment Variables
-
-**Frontend** (`.env.local`):
-```env
-GEMINI_API_KEY=your_api_key
-NEXT_PUBLIC_API_URL=http://localhost:8000
-```
-
-**Backend** (`api/.env`):
-```env
-GEMINI_API_KEY=your_api_key
-ENVIRONMENT=development
-```
-
-## Performance Features
-
-- **Streaming responses** for chat
-- **Lazy loading** of components
-- **Image optimization** with Next.js
-- **Database query optimization** (prepared statements)
-- **Response caching** ready
-- **Async/await** for non-blocking operations
-
-## Security Features
-
-- **Environment variable management**
-- **CORS configuration**
-- **Input validation** with Pydantic
-- **Error handling** and logging
-- **Type safety** with TypeScript + Python type hints
-- **Prepared statements** for SQL (when integrated)
-
-## Deployment
-
-See [DEPLOYMENT.md](./DEPLOYMENT.md) for comprehensive deployment guide.
-
-### Quick Deploy to Vercel
-
-```bash
-# 1. Push to GitHub
-git push origin main
-
-# 2. Import in Vercel dashboard
-# - Connect GitHub repo
-# - Add environment variables
-# - Deploy
-
-# 3. API automatically deploys as Vercel Function
-# Backend URL: https://your-domain.vercel.app/api
-```
-
-## Testing
-
-### Manual Testing
-```bash
-# Test health endpoint
-curl http://localhost:8000/health
-
-# Test chat
-curl -X POST http://localhost:8000/api/chat \
-  -H "Content-Type: application/json" \
-  -d '{"message":"Hello"}'
-
-# Test file upload
-curl -X POST http://localhost:8000/api/upload-dataset \
-  -F "file=@data.csv"
-```
-
-### API Documentation
-Interactive docs available at:
-- Swagger: http://localhost:8000/docs
-- ReDoc: http://localhost:8000/redoc
-
-## Performance Benchmarks
-
-- **Frontend Build**: ~30 seconds
-- **API Response**: <500ms (typical)
-- **Gemini Analysis**: <2s (depends on data size)
-- **File Upload**: Limited by network speed
-- **Visualization Generation**: <1s
-
-## Future Enhancements
-
-- [ ] Database integration (PostgreSQL/Neon)
-- [ ] Redis caching layer
-- [ ] Advanced ML models
-- [ ] Real-time collaboration
-- [ ] Multi-user authentication
-- [ ] Export to PDF/Excel
-- [ ] Scheduled analysis
-- [ ] Custom report templates
-- [ ] Integration with business tools (Salesforce, HubSpot, etc)
-- [ ] Advanced data governance
-
-## Contributing
-
-We welcome contributions! Please:
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Submit a pull request
-
-## License
-
-MIT License - See LICENSE file for details
-
-## Support
-
-- Issues: GitHub Issues
-- Email: support@datamind.ai
-- Documentation: [DEPLOYMENT.md](./DEPLOYMENT.md)
-
-## Team
-
-Built for the hackathon with passion for data analysis and AI.
+</div>
 
 ---
 
-**Ready to win? Deploy to Vercel and watch the magic happen!**
+## Who is this for?
 
-```bash
-npm run build && git push
+| Audience | What you’ll find here |
+|----------|------------------------|
+| **Everyone** | A short overview, pictures of the product, and what problem we solve — no code required. |
+| **Judges & reviewers** | Clear install steps, honest feature list, architecture, limitations, and how to verify the app works. |
+| **Developers** | Tech stack, folder layout, API overview, and environment variables (with `.env.example` — never real secrets). |
+
+---
+
+## Table of contents
+
+1. [Overview](#overview)  
+2. [Screenshots & visuals](#screenshots--visuals)  
+3. [Features (implemented)](#features-implemented)  
+4. [How it works (simple)](#how-it-works-simple)  
+5. [Tech stack](#tech-stack)  
+6. [Folder structure](#folder-structure)  
+7. [Install & run](#install--run)  
+8. [Usage examples](#usage-examples)  
+9. [Architecture & data flow](#architecture--data-flow)  
+10. [API reference (short)](#api-reference-short)  
+11. [Configuration](#configuration)  
+12. [Limitations & honesty](#limitations--honesty)  
+13. [Future improvements](#future-improvements)  
+14. [Hackathon / submission notes](#hackathon--submission-notes)  
+15. [License & team](#license--team)  
+
+---
+
+## Overview
+
+**DataMind** is a web application that helps people understand **CSV and Excel** data without writing formulas or code. You **upload** a file, **chat** in natural language (powered by **Google Gemini**), and explore **automatic charts**, **KPI-style summaries**, **trend views**, and **downloadable HTML reports**. You can also **compare two datasets** side by side and get a structured diff plus an optional AI narrative.
+
+**Problem it solves:** Business and student users often have data in spreadsheets but lack time or skills to analyse it deeply. DataMind lowers the barrier by combining familiar file upload with an AI analyst and clear visuals.
+
+**Who it’s for:** Students, analysts, founders, and hackathon judges who want a **working end-to-end demo**: real file → real stats → real LLM responses (when an API key is configured).
+
+---
+
+## Screenshots & visuals
+
+Real product and architecture images live in [`docs/images/`](./docs/images/). To refresh them after UI changes, overwrite the same filenames (see [`docs/images/README.md`](./docs/images/README.md)).
+
+### Flow & architecture (combined figure)
+
+End-to-end **user journey** (browser → Next.js → FastAPI → Gemini & data) and **system structure** in one diagram.
+
+<p align="center">
+  <img src="./docs/images/flow-architecture.png" alt="DataMind — combined user flow and technical architecture diagram" width="95%" />
+</p>
+
+### Architecture diagram (Mermaid — renders on GitHub)
+
+```mermaid
+flowchart TB
+  subgraph Users[" "]
+    U[User browser]
+  end
+
+  subgraph Frontend["Next.js app"]
+    P[Pages: Dashboard / Analytics / Trends / Settings]
+    C[React components + Recharts]
+    LS[(localStorage: active dataset id)]
+  end
+
+  subgraph Backend["FastAPI (Python)"]
+    DS[DataService — in-memory tables]
+    AI[AIService — Gemini REST]
+    VS[Visualization / chart payloads]
+  end
+
+  subgraph External["External"]
+    G[Google Gemini API]
+  end
+
+  U --> P
+  P --> C
+  C --> LS
+  P -->|HTTP: upload, chat, analyse| DS
+  P -->|HTTP| AI
+  AI --> G
+  DS --> VS
+  VS -->|JSON charts| P
 ```
 
-Your app will be live in seconds with world-class performance and zero-config deployment.
+### Product walkthrough *(7 screens)*
+
+<p align="center">
+  <strong>1 · Dashboard — KPIs &amp; quick actions</strong><br/>
+  <img src="./docs/images/screen-03-dashboard-kpis.png" alt="DataMind dashboard showing KPI cards and Open analytics button" width="92%" />
+</p>
+
+<p align="center">
+  <strong>2 · Dashboard — AI analysis chat</strong><br/>
+  <img src="./docs/images/screen-04-dashboard-chat.png" alt="DataMind dashboard with Analysis Chat and executive insights from Gemini" width="92%" />
+</p>
+
+<p align="center">
+  <strong>3 · Analytics — key metrics &amp; line charts</strong><br/>
+  <img src="./docs/images/screen-07-analytics-charts.png" alt="Analytics page with total records, completeness, and line charts such as Age by row index" width="92%" />
+</p>
+
+<p align="center">
+  <strong>4 · Analytics — scatter plot &amp; AI-powered insights</strong><br/>
+  <img src="./docs/images/screen-02-analytics-scatter-insights.png" alt="Analytics with Age vs BMI scatter chart and AI insight cards" width="92%" />
+</p>
+
+<p align="center">
+  <strong>5 · Trends — dataset-driven signals</strong><br/>
+  <img src="./docs/images/screen-05-trends.png" alt="Trends page with current trend cards and AI predictions from the active dataset" width="92%" />
+</p>
+
+<p align="center">
+  <strong>6 · Compare datasets — schema &amp; scale</strong><br/>
+  <img src="./docs/images/screen-01-compare-datasets.png" alt="Compare datasets modal showing Dataset A vs B and schema alignment" width="92%" />
+</p>
+
+<p align="center">
+  <strong>7 · Formal HTML report — executive summary &amp; data dictionary</strong><br/>
+  <img src="./docs/images/screen-06-formal-html-report.png" alt="Downloaded or previewed DataMind HTML report with executive summary and column dictionary" width="92%" />
+</p>
+
+---
+
+## Features (implemented)
+
+These are **in the codebase and working** today (with a valid Gemini key where noted):
+
+- **File upload** — CSV and Excel (`.csv`, `.xlsx`, `.xls`) via the dashboard; server returns a `dataset_id`.
+- **AI chat** — Ask questions about the **active** dataset; the backend attaches **dataset metadata** and a **tabular preview** to the model context.
+- **KPI-style dashboard** — Summary cards driven by dataset stats on the home view.
+- **Dataset analysis** — `POST /analyze-dataset` returns structured fields such as insights, trends, recommendations, and anomalies (exact shape depends on the model response).
+- **Analytics page** — Fetches dataset info, chart JSON, and analysis; **Recharts** visualisations; **export** opens the formal **HTML report** dialog.
+- **Trends page** — Dataset-driven trend cards, sparklines from chart data, AI text when available, and **data-driven fallbacks** when the model returns empty fields.
+- **Compare datasets** — Upload a second file, compare schema and numeric overlap, side-by-side charts, **download comparison HTML report**.
+- **Formal HTML reports** — Client-side HTML build + download for single-dataset and comparison reports.
+- **Voice API** — Backend endpoints for **speech-to-text** and **text-to-speech** (Gemini); UI may use browser speech where implemented.
+- **Active dataset persistence** — Selected dataset id stored in **localStorage** so refresh keeps context (server-side data still lives in memory — see [limitations](#limitations--honesty)).
+- **API documentation** — Interactive **Swagger** at `/docs` when the Python server is running.
+- **Docker Compose** — Optional one-command bring-up of API + frontend (see [Install & run](#install--run)).
+
+We **do not** claim features that are not wired in the UI or API. If something is partial, it is called out under [limitations](#limitations--honesty).
+
+---
+
+## How it works (simple)
+
+1. You open the **web app** and **upload** a spreadsheet.  
+2. The **Python service** reads the file with **Pandas**, stores it **in memory**, and gives back an id.  
+3. The **browser** remembers that id and calls the API for **info**, **charts**, and **AI analysis**.  
+4. **Gemini** reads a **text summary** of your data (not the whole file at once) and answers chat or analysis prompts.  
+5. You can **export HTML reports** or **compare** against a second upload.
+
+---
+
+## Tech stack
+
+| Area | Technologies |
+|------|----------------|
+| **Languages** | TypeScript, Python 3.10+ |
+| **Frontend** | Next.js (App Router), React 19, Tailwind CSS, Radix / shadcn-style UI, Recharts |
+| **Backend** | FastAPI, Pandas, Pydantic |
+| **AI / ML** | Google **Gemini** via REST (`generateContent`); optional model fallbacks in `AIService` |
+| **Data storage** | **In-memory** per server process (no PostgreSQL/Mongo required for the demo) |
+| **Cloud / deploy** | Environment-based config; frontend can sit on Vercel; API on any Python host; **Docker Compose** for local full stack |
+| **Voice** | Server endpoints using Gemini; browser **Web Speech** where applicable |
+
+---
+
+## Folder structure
+
+Logical layout (high level — avoids a single “god file” for all logic):
+
+```text
+project/
+├── app/                    # Next.js routes & layouts (dashboard, analytics, trends, settings)
+├── components/             # UI: chat, upload, KPIs, dialogs, shell
+├── contexts/               # React context (e.g. active dataset + localStorage)
+├── lib/                    # Shared TS helpers (reports, suggestions, …)
+├── docs/
+│   └── images/             # README screenshots (see docs/images/README.md)
+├── api/                    # Python FastAPI service
+│   ├── main.py             # HTTP routes
+│   ├── services/           # AI, data, visualization logic
+│   ├── models/             # Pydantic schemas
+│   └── requirements.txt
+├── .env.example            # Frontend env template (no secrets)
+├── docker-compose.yml      # Optional: API + web
+└── README.md               # This file
+```
+
+---
+
+## Install & run
+
+### Prerequisites
+
+- **Node.js** 18+ (20+ recommended)  
+- **Python** 3.10+  
+- **pnpm**, **npm**, or **yarn**  
+- A **Google Gemini API key** ([Google AI Studio](https://aistudio.google.com/)) — optional for UI-only exploration; **required** for real AI responses  
+
+### 1. Clone the repository
+
+```bash
+git clone <your-repo-url>
+cd <project-folder>
+```
+
+### 2. Install dependencies
+
+**Frontend (repository root):**
+
+```bash
+pnpm install
+# or: npm install
+```
+
+**Backend:**
+
+```bash
+cd api
+python -m venv venv
+
+# Windows
+venv\Scripts\activate
+
+# macOS / Linux
+source venv/bin/activate
+
+pip install -r requirements.txt
+cd ..
+```
+
+### 3. Configure environment (no secrets in git)
+
+```bash
+copy .env.example .env.local          # Windows: copy
+# cp .env.example .env.local          # macOS / Linux
+
+copy api\.env.example api\.env        # Windows
+# cp api/.env.example api/.env        # macOS / Linux
+```
+
+- Put **`GEMINI_API_KEY`** (or **`GOOGLE_API_KEY`**) in **`api/.env`**.  
+- In **`.env.local`**, set for local dev (typical):
+
+```env
+NEXT_PUBLIC_API_URL=/api
+```
+
+The Next.js dev server can **rewrite** `/api/*` to your FastAPI server (default `http://127.0.0.1:8000`). Override with **`API_PYTHON_URL`** if needed. See `next.config.mjs`.
+
+### 4. Run the application
+
+**Option A — Docker Compose (full stack)**
+
+```bash
+docker compose up
+```
+
+- App: **http://localhost:3000**  
+- API: **http://localhost:8000**  
+- Docs: **http://localhost:8000/docs**  
+
+**Option B — Two terminals (common for development)**
+
+Terminal 1 — **FastAPI:**
+
+```bash
+cd api
+venv\Scripts\activate
+python main.py
+# or: uvicorn main:app --reload --host 0.0.0.0 --port 8000
+```
+
+Terminal 2 — **Next.js:**
+
+```bash
+pnpm dev
+# or: npm run dev
+```
+
+Open **http://localhost:3000**.
+
+### 5. Quick health check
+
+```bash
+curl http://localhost:8000/health
+```
+
+You should see JSON with `"status": "healthy"` and service flags.
+
+---
+
+## Usage examples
+
+### In the browser (non-technical)
+
+1. Go to the **Dashboard**.  
+2. **Upload** a `.csv` or Excel file.  
+3. Wait for KPIs / chat to reflect the **active** file.  
+4. Try a question like: *“What are the main columns and any quality issues?”*  
+5. Open **Analytics** or **Trends** for charts and narrative.  
+6. Use **Compare datasets** or **Generate report** if those actions appear in your build.
+
+### Example API calls (technical)
+
+**Upload** (from repo root; adjust path to a real file):
+
+```bash
+curl -X POST http://localhost:8000/upload-dataset -F "file=@./sample.csv"
+```
+
+**Chat** (minimal body):
+
+```bash
+curl -X POST http://localhost:8000/chat ^
+  -H "Content-Type: application/json" ^
+  -d "{\"message\":\"Summarise this dataset in 3 bullet points.\",\"dataset_id\":\"YOUR_DATASET_ID\"}"
+```
+
+> **Note:** The FastAPI app exposes routes at the **root** of its origin (e.g. `/chat`). If the browser uses `NEXT_PUBLIC_API_URL=/api`, Next.js **proxies** `/api/chat` → `http://127.0.0.1:8000/chat` in development.
+
+**Analyse:**
+
+```bash
+curl -X POST http://localhost:8000/analyze-dataset ^
+  -H "Content-Type: application/json" ^
+  -d "{\"dataset_id\":\"YOUR_DATASET_ID\",\"analysis_type\":\"comprehensive\"}"
+```
+
+More endpoints: **`/dataset-info/{id}`**, **`/dataset-charts/{id}`**, **`/compare-datasets`**, **`/kpi-analysis`**, **`/voice-transcribe`**, **`/voice-synthesis`** — see **http://localhost:8000/docs**.
+
+---
+
+## Architecture & data flow
+
+1. **Browser** loads the Next.js app and may store **active `dataset_id`** in `localStorage`.  
+2. **Client** calls the API (direct URL or `/api` rewrite) for upload, chat, and analysis.  
+3. **FastAPI** uses **Pandas** to parse files and **AIService** to call **Gemini** with **summaries** and **previews** (not unlimited full-file dumps).  
+4. **Chart payloads** are JSON consumed by **Recharts** on the frontend.  
+5. **Reports** are built as **HTML** in the client for download.
+
+For a visual, see the [Mermaid diagram](#screenshots--visuals) and the combined figure placeholder above.
+
+---
+
+## API reference (short)
+
+| Method | Path | Purpose |
+|--------|------|---------|
+| `GET` | `/health` | Health check |
+| `POST` | `/chat` | Conversational AI; optional `dataset_id` enriches context |
+| `POST` | `/upload-dataset` | Multipart file upload |
+| `POST` | `/analyze-dataset` | AI + structured analysis object |
+| `GET` | `/dataset-info/{id}` | Rows, columns, nulls per column |
+| `GET` | `/dataset-numeric-summary/{id}` | Numeric summary text |
+| `GET` | `/dataset-charts/{id}` | JSON for charts |
+| `POST` | `/compare-datasets` | Two ids → comparison + snapshot |
+| `POST` | `/kpi-analysis` | KPI-oriented analysis |
+| `POST` | `/voice-transcribe` | Audio → text |
+| `POST` | `/voice-synthesis` | Text → audio |
+
+Full schemas: **`/docs`** (Swagger).
+
+---
+
+## Configuration
+
+| Variable | Where | Purpose |
+|----------|--------|---------|
+| `GEMINI_API_KEY` or `GOOGLE_API_KEY` | `api/.env` | Gemini access |
+| `GEMINI_MODEL`, `GEMINI_MODEL_FALLBACKS` | `api/.env` | Optional model overrides |
+| `NEXT_PUBLIC_API_URL` | `.env.local` | API base URL the browser calls |
+| `API_PYTHON_URL` | env / build | Next.js rewrite target for `/api/*` |
+| `ALLOWED_ORIGINS`, `DATA_DIR`, … | `api/.env` | Server tuning (see `api/.env.example`) |
+
+**Security:** Never commit real keys. Only commit **`.env.example`** / **`api/.env.example`**.
+
+---
+
+## Limitations & honesty
+
+- **In-memory data:** Restarting the Python process **clears** uploaded datasets. Users must **re-upload** after a server restart unless you add persistence.  
+- **Gemini dependency:** Without a valid key, AI features fall back to **demo or error messages** depending on the code path.  
+- **Model availability:** Google may change model names; the backend includes **fallback** logic — check logs if you see HTTP 404/429.  
+- **Not a full BI suite:** No multi-user auth, row-level security, or warehouse integration in this repo.  
+- **Tests:** Automated tests are **not** required by this README; add a `tests/` folder if you want assessment on coverage (see hackathon rules).
+
+This section is intentionally explicit so **judges can trust** what they are evaluating.
+
+---
+
+## Future improvements
+
+Ideas for a **longer runway** (not promised as done today):
+
+- Persistent storage (e.g. **S3** + **PostgreSQL**) for files and metadata  
+- User accounts and **OAuth**  
+- Streaming chat responses (**SSE** / WebSocket)  
+- Stronger automated **tests** and CI  
+- Scheduled reports and email delivery  
+
+---
+
+## Hackathon / submission notes
+
+This documentation is structured to align with common **student hackathon README expectations** (clear overview, real features, install steps, tech stack, usage, architecture, honesty):
+
+- **README is accurate** — features listed under [Features (implemented)](#features-implemented) correspond to working paths in the repository.  
+- **Secrets** — Use `.env.example` only; do not commit real API keys or passwords.  
+- **Original work** — Use third-party libraries under their licences; your **integration, prompts, and UI** should be your team’s own submission.  
+- **Repository rules** — Follow the organiser’s policies (e.g. **private repo** during the event, **DCO / sign-off**, **single email**, **Apache 2.0** compatibility if required).  
+- **Screenshots** — Add final PNGs per [`docs/images/README.md`](./docs/images/README.md) before final submission.
+
+---
+
+## License & team
+
+- **License:** Include a `LICENSE` file consistent with the hackathon rules (many events use **Apache 2.0** with **DCO**). If this repo has no `LICENSE` yet, add one before submission.  
+- **Team:** *[Add your names, handles, and affiliation here.]*  
+- **Issues:** Use GitHub **Issues** for bug reports and questions about this repo.
+
+---
+
+<div align="center">
+
+**DataMind** — from spreadsheet to insight, with AI you can actually run locally.
+
+</div>

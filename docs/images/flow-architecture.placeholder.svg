@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="920" height="420" viewBox="0 0 920 420" role="img" aria-label="Placeholder: replace with flow-architecture.png">
+  <rect width="920" height="420" fill="#0f172a"/>
+  <text x="460" y="200" fill="#94a3b8" font-family="system-ui,sans-serif" font-size="18" text-anchor="middle">Replace with your combined</text>
+  <text x="460" y="230" fill="#e2e8f0" font-family="system-ui,sans-serif" font-size="22" font-weight="600" text-anchor="middle">flow-architecture.png</text>
+  <text x="460" y="270" fill="#64748b" font-family="system-ui,sans-serif" font-size="14" text-anchor="middle">User journey + system architecture (see README Mermaid diagram)</text>
+</svg>
