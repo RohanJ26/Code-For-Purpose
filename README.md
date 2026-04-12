@@ -46,7 +46,7 @@
 
 ## Overview
 
-**DataMind** is a web application that helps people understand **CSV and Excel** data without writing formulas or code. You **upload** a file, **chat** in natural language (powered by **Google Gemini**), and explore **automatic charts**, **KPI-style summaries**, **trend views**, and **downloadable HTML reports**. You can also **compare two datasets** side by side and get a structured diff plus an optional AI narrative.
+**DataMind** is a web application that helps people understand **CSV and Excel** data without writing formulas or code. You **upload** a file, **chat** in natural language, and explore **automatic charts**, **KPI-style summaries**, **trend views**, and **downloadable HTML reports**. You can also **compare two datasets** side by side and get a structured diff plus an optional AI narrative.
 
 **Problem it solves:** Business and student users often have data in spreadsheets but lack time or skills to analyse it deeply. DataMind lowers the barrier by combining familiar file upload with an AI analyst and clear visuals.
 
@@ -62,49 +62,16 @@ Screenshots live in **`docs/images/`**. The **architecture diagram** is also cop
 
 ### Flow & architecture (combined figure)
 
-End-to-end **user journey** (browser → Next.js → FastAPI → Gemini & data) and **system structure** in one diagram.
+End-to-end **user journey** (browser → Next.js → FastAPI → GenAI & data) and **system structure** in one diagram.
 
 <p align="center">
   <img
     src="architecture-diagram.png"
-    alt="DataMind: combined user flow and system architecture (browser, Next.js, FastAPI, Gemini)"
+    alt="DataMind: combined user flow and system architecture (browser, Next.js, FastAPI, GenAI)"
     width="920"
   />
 </p>
 
-### Architecture diagram (Mermaid — renders on GitHub)
-
-```mermaid
-flowchart TB
-  subgraph Users[" "]
-    U[User browser]
-  end
-
-  subgraph Frontend["Next.js app"]
-    P[Pages: Dashboard / Analytics / Trends / Settings]
-    C[React components + Recharts]
-    LS[(localStorage: active dataset id)]
-  end
-
-  subgraph Backend["FastAPI (Python)"]
-    DS[DataService — in-memory tables]
-    AI[AIService — Gemini REST]
-    VS[Visualization / chart payloads]
-  end
-
-  subgraph External["External"]
-    G[Google Gemini API]
-  end
-
-  U --> P
-  P --> C
-  C --> LS
-  P -->|HTTP: upload, chat, analyse| DS
-  P -->|HTTP| AI
-  AI --> G
-  DS --> VS
-  VS -->|JSON charts| P
-```
 
 ### Product walkthrough *(7 screens)*
 
@@ -140,7 +107,7 @@ flowchart TB
 
 ## Features (implemented)
 
-These are **in the codebase and working** today (with a valid Gemini key where noted):
+These are **in the codebase and working** today (with a valid key where noted):
 
 - **File upload** — CSV and Excel (`.csv`, `.xlsx`, `.xls`) via the dashboard; server returns a `dataset_id`.
 - **AI chat** — Ask questions about the **active** dataset; the backend attaches **dataset metadata** and a **tabular preview** to the model context.
@@ -164,7 +131,7 @@ We **do not** claim features that are not wired in the UI or API. If something i
 1. You open the **web app** and **upload** a spreadsheet.  
 2. The **Python service** reads the file with **Pandas**, stores it **in memory**, and gives back an id.  
 3. The **browser** remembers that id and calls the API for **info**, **charts**, and **AI analysis**.  
-4. **Gemini** reads a **text summary** of your data (not the whole file at once) and answers chat or analysis prompts.  
+4. **GenAI** reads a **text summary** of your data (not the whole file at once) and answers chat or analysis prompts.  
 5. You can **export HTML reports** or **compare** against a second upload.
 
 ---
@@ -358,7 +325,7 @@ More endpoints: **`/dataset-info/{id}`**, **`/dataset-charts/{id}`**, **`/compar
 4. **Chart payloads** are JSON consumed by **Recharts** on the frontend.  
 5. **Reports** are built as **HTML** in the client for download.
 
-For a visual, see the [Mermaid diagram](#screenshots--visuals) and the combined figure placeholder above.
+
 
 ---
 
