@@ -37,10 +37,7 @@
 9. [Architecture & data flow](#architecture--data-flow)  
 10. [API reference (short)](#api-reference-short)  
 11. [Configuration](#configuration)  
-12. [Limitations & honesty](#limitations--honesty)  
-13. [Future improvements](#future-improvements)  
-14. [Hackathon / submission notes](#hackathon--submission-notes)  
-15. [License & team](#license--team)  
+12. [Connect With Our Team](#connect-with-our-team)
 
 ---
 
@@ -364,7 +361,7 @@ Full schemas: **`/docs`** (Swagger).
 ---
 
 
-## 🤝 Connect With Our Team
+## Connect With Our Team
 
 Connect with us on LinkedIn:
 
